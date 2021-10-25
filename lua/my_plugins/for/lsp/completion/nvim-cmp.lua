@@ -1,9 +1,8 @@
-use = require('packer').use 
 use {'hrsh7th/nvim-cmp'}
 
 use {'neovim/nvim-lspconfig'}
 use {'hrsh7th/cmp-nvim-lsp', requires = {'hrsh7th/nvim-cmp'}}
-use {'hrsh7th/cmp-buffer', requires = {'hrsh7th/nvim-cmp'}}
+use {'hrsh7th/cmp-buffer', requires = {'hrsh7th/nvim-cmp', 'L3MON4D3/LuaSnip'}}
 -- use {'saadparwaiz1/cmp_luasnip'}
 --[[ local cmp = require('cmp')
 local nvim_lsp = require('lspconfig') ]]
@@ -39,7 +38,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver' }
+local servers = { 'pyright', 'sumneko_lua' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -132,4 +131,4 @@ cmp.setup {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   },
-} 
+}

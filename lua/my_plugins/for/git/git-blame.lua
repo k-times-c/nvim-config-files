@@ -1,0 +1,1 @@
+use 'f-person/git-blame.nvim'

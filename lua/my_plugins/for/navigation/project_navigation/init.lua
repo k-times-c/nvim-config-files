@@ -1,0 +1,1 @@
+require('my_plugins/for/navigation/project_navigation/project')

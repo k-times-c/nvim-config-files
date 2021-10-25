@@ -27,3 +27,4 @@ vim.api.nvim_set_keymap('n', "<leader>ff", "<cmd>Telescope find_files<cr>", { no
 vim.api.nvim_set_keymap('n', "<leader>fg", "<cmd>Telescope live_grep<cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', "<leader>fb", "<cmd>Telescope buffers<cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', "<leader>fh", "<cmd>Telescope help_tags<cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', "<leader>fd", "<cmd>lua require('telescope.builtin').find_files({prompt_title = 'my dotfiles', cwd = '~/.config/nvim/'})<cr>", { noremap = true })
