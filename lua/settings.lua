@@ -18,6 +18,7 @@ vim.o.hidden = true
 vim.o.wrap = false
 vim.o.ruler = true
 vim.o.wildignore = "**/node_modules/**,**/dist/**,*.pyc,*__pycache__/**,**/venv/**"
+if vim.fn.has('Mac') then vim.o.wildignore = vim.o.wildignore .. ',.DS_Store*' end
 vim.go.path = ".,,**3"
 vim.o.encoding = "utf8"
 vim.o.guifont = "Droid Sans Mono for Powerline Plus Nerd File Types 11"
