@@ -1,1 +1,1 @@
-use { 'nvim-treesitter/nvim-treesitter-refactor' }
+-- use { 'nvim-treesitter/nvim-treesitter-refactor', after = 'nvim-treesitter' }

@@ -1,5 +1,5 @@
-use {'mfussenegger/nvim-dap'}
-use { 'jbyuki/one-small-step-for-vimkind', opt = true, ft = "lua",
+use {'mfussenegger/nvim-dap', opt = true, requires = { 'nvim-dap-virtual-text', "rcarriga/nvim-dap-ui" }}
+use { 'jbyuki/one-small-step-for-vimkind', opt = true, requires = "rcarriga/nvim-dap-ui", 
 	config = function()
 	local dap = require("dap")
 	dap.configurations.lua = {

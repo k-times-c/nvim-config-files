@@ -1,4 +1,4 @@
-use {
+use { 
     "nvim-neorg/neorg",
     config = function()
         require('neorg').setup {

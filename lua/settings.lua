@@ -1,3 +1,26 @@
+-- disable runtime plugins
+-- loaded_marks          #1
+-- loaded_catppuccino    #1
+vim.g.loaded_tarPlugin = true
+vim.g.loaded_zipPlugin = true
+-- loaded_spellfile_plugin #1
+vim.g.loaded_tutor_mode_plugin = true
+-- vim.g.loaded_netrwPlugin = true
+-- loaded_shada_plugin   #1
+vim.g.loaded_man = true
+vim.g.loaded_gzip = true
+vim.g.loaded_2html_plugin = true
+vim.g.loaded_matchparen = true
+vim.g.loaded_matchit    = true
+-- loaded_remote_plugins  C:\Users\gruq\AppData\Local\nvim-data/rplugin.vim
+
+vim.o.hidden = true
+vim.o.wrap = false
+vim.o.ruler = true
+vim.o.wildignore = "**/node_modules/**,**/dist/**,*.pyc,*__pycache__/**,**/venv/**"
+vim.go.path = ".,,**3"
+vim.o.encoding = "utf8"
+vim.o.guifont = "Droid Sans Mono for Powerline Plus Nerd File Types 11"
 --Incremental live completion (note: this is now a default on master)
 vim.o.inccommand = 'nosplit'
 
@@ -14,6 +37,7 @@ vim.o.mouse = 'a'
 vim.o.breakindent = true
 
 --Save undo history
+vim.o.history=700
 vim.opt.undofile = true
 
 --Case insensitive searching UNLESS /C or capital in search
@@ -27,6 +51,13 @@ vim.wo.signcolumn = 'yes'
 --Set colorscheme (order is important here)
 vim.o.termguicolors = true
 vim.g.onedark_terminal_italics = 2
+
+-- add list symbols
+vim.opt.list = true
+vim.opt.listchars:append("space:⋅")
+vim.opt.listchars:append("eol:↴")
+-- vim.opt.listchars:append("tab:»")
+-- vim.opt.listchars.set('eol:↲,tab:»,trail:·,extends:<,precedes:>,conceal:┊,nbsp:␣')
 
 -- Highlight on yank
 vim.api.nvim_exec(
