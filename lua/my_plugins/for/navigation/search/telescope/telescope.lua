@@ -19,13 +19,16 @@ use {
 
 use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make', requires = 'nvim-telescope/telescope.nvim' }
 
-
-
+if vim.fn.has('Mac') then
+	config_home = '~/.config/nvim/'
+else
+	config_home = '~/AppData/Local/nvim/'
+end
 -- Find files using Telescope command-line sugar.
 vim.api.nvim_set_keymap('n', "<leader>fb", "<cmd>Telescope buffers<cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', "<leader>fc", "<cmd>Telescope commands<cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', "<leader>fk", "<cmd>Telescope keymaps<cr>", { noremap = true })
-vim.api.nvim_set_keymap('n', "<leader>fn", "<cmd>lua require('telescope.builtin').find_files({prompt_title = 'nvim config', cwd = '~/AppData/Local/nvim/'})<cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', "<leader>fn", "<cmd>lua require('telescope.builtin').find_files({prompt_title = 'nvim config', cwd = '" .. config_home .. "'})<cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', "<leader>ff", "<cmd>Telescope find_files<cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', "<leader>fg", "<cmd>Telescope live_grep<cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', "<leader>fh", "<cmd>Telescope help_tags<cr>", { noremap = true })
