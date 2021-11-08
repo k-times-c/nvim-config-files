@@ -19,7 +19,7 @@ use {
 
 use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make', requires = 'nvim-telescope/telescope.nvim' }
 
-if vim.fn.has('Mac') then
+if vim.fn.has('Mac') == 1 then
 	config_home = '~/.config/nvim/'
 else
 	config_home = '~/AppData/Local/nvim/'
