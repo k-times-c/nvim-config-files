@@ -7,7 +7,9 @@ end
 use = require('packer').use
 return require('packer').startup(function(use)
 
+-- TODO: pull out to its own file
   use 'wbthomason/packer.nvim'
+-- TODO: pull out to its own file
   use { 'andymass/vim-matchup', opt = true, keys = '%' }
 
   require('my_plugins/for/uxui')
