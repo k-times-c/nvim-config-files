@@ -7,10 +7,6 @@ end
 use = require('packer').use
 return require('packer').startup(function(use)
 
-  vim.api.nvim_set_keymap('n', '<bslash>pc', ':PackerCompile<CR>', { noremap = true })
-  vim.api.nvim_set_keymap('n', '<bslash>ps', ':PackerSync<CR>', { noremap = true })
-  vim.api.nvim_set_keymap('n', '<bslash>pt', ':PackerStatus<CR>', { noremap = true })
-
   use 'wbthomason/packer.nvim'
   use { 'andymass/vim-matchup', opt = true, keys = '%' }
 
