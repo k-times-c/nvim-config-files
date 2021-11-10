@@ -1,4 +1,4 @@
-require('packer').use { 'vimwiki/vimwiki', opt = true, keys = {"<leader>ww", "<Leader>wt"}, ft = {"vimwiki", "markdown" } }
+require('packer').use { 'vimwiki/vimwiki', opt = true, keys = {"<leader>w<leader>w", "<leader>ww", "<Leader>wt"}, ft = {"vimwiki", "markdown" } }
 -- vim.g.wiki_list = [[[{'path': '~/my_wiki/'}]]]
 -- vim.api.nvim_set_var('wiki_list', [[ [{'path': '~/my_wiki/'}] ]])
 -- vim.g.vimwiki_path = '~/wiki'
