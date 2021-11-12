@@ -64,3 +64,12 @@ vim.api.nvim_exec(
 ]],
   false
 )
+
+if vim.fn.has("Mac") == 0 then
+	-- documentation has this listed as `vim.o.shell = has('win32') ? 'powershell' : 'pwsh'`
+	vim.o.shell = 'powershell'
+	vim.o.shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+	vim.o.shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+	vim.o.shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+	vim.cmd([[ set shellquote= shellxquote= ]])
+end
