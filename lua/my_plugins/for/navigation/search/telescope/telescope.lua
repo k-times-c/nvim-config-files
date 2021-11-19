@@ -19,19 +19,25 @@ use {
 
 use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make', requires = 'nvim-telescope/telescope.nvim' }
 
+local config_home = ''
+
 if vim.fn.has('Mac') == 1 then
 	config_home = '~/.config/nvim/'
 else
 	config_home = '~/AppData/Local/nvim/'
 end
 -- Find files using Telescope command-line sugar.
-vim.api.nvim_set_keymap('n', "<leader>fb", "<cmd>Telescope buffers<cr>", { noremap = true })
-vim.api.nvim_set_keymap('n', "<leader>fcc", "<cmd>Telescope commands<cr>", { noremap = true })
-vim.api.nvim_set_keymap('n', "<leader>fk", "<cmd>Telescope keymaps<cr>", { noremap = true })
-vim.api.nvim_set_keymap('n', "<leader>fn", "<cmd>lua require('telescope.builtin').find_files({prompt_title = 'nvim config', cwd = '" .. config_home .. "'})<cr>", { noremap = true })
-vim.api.nvim_set_keymap('n', "<leader>ff", "<cmd>Telescope find_files<cr>", { noremap = true })
-vim.api.nvim_set_keymap('n', "<leader>fg", "<cmd>Telescope live_grep<cr>", { noremap = true })
-vim.api.nvim_set_keymap('n', "<leader>fh", "<cmd>Telescope help_tags<cr>", { noremap = true })
-vim.api.nvim_set_keymap('n', "<leader>fcb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { noremap = true })
+local opts = { noremap = true }
+vim.api.nvim_set_keymap('n', "<leader>fb", "<cmd>Telescope buffers<cr>", opts)
+vim.api.nvim_set_keymap('n', "<leader>fc", "<cmd>Telescope commands<cr>", opts)
+vim.api.nvim_set_keymap('n', "<leader>fk", "<cmd>Telescope keymaps<cr>", opts)
+vim.api.nvim_set_keymap('n', "<leader>fn", "<cmd>lua require('telescope.builtin').find_files({prompt_title = 'nvim config', cwd = '" .. config_home .. "'})<cr>", opts)
+vim.api.nvim_set_keymap('n', "<leader>f.", "<cmd>lua require('telescope.builtin').find_files({prompt_title = 'find files in filenames current directory', cwd = vim.fn.expand('%:h')})<cr>", opts)
+vim.api.nvim_set_keymap('n', "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
+vim.api.nvim_set_keymap('n', "<leader>fg", "<cmd>Telescope live_grep<cr>", opts)
+vim.api.nvim_set_keymap('n', "<leader>fh", "<cmd>Telescope help_tags<cr>", opts)
+vim.api.nvim_set_keymap('n', "<leader>f%", "<cmd>Telescope current_buffer_fuzzy_find<cr>", opts)
 -- TODO: on enter set the working directory for the buffer (if not possible then the window)
-vim.api.nvim_set_keymap('n', "<leader>fp", "<cmd>Telescope projects<cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', "<leader>f.", "<cmd>lua require('telescope.builtin').find_files({ prompt_title = 'find files in filenames current directory', cwd = '" .. vim.fn.expand('%:h')  .. "'})<cr>", opts)
+vim.api.nvim_set_keymap('n', "<leader>fs", "<cmd>lua require('telescope.builtin').file_browser({ prompt_title = 'nvim data', cwd = '~\\AppData\\Local\\nvim-data\\'})<cr>", opts)
+vim.api.nvim_set_keymap('n', "<leader>fp", "<cmd>Telescope projects<cr>", opts)

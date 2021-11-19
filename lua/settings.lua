@@ -51,6 +51,7 @@ vim.o.termguicolors = true
 vim.opt.list = true
 vim.opt.listchars:append("space:⋅")
 vim.opt.listchars:append("eol:↴")
+-- vim.opt.listchars:remove("tab:>")
 -- vim.opt.listchars:append("tab:»")
 -- vim.opt.listchars.set('eol:↲,tab:»,trail:·,extends:<,precedes:>,conceal:┊,nbsp:␣')
 
@@ -67,7 +68,7 @@ vim.api.nvim_exec(
 
 if vim.fn.has("Mac") == 0 then
 	-- documentation has this listed as `vim.o.shell = has('win32') ? 'powershell' : 'pwsh'`
-	vim.o.shell = 'powershell'
+	vim.o.shell = 'pwsh'
 	vim.o.shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
 	vim.o.shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 	vim.o.shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'

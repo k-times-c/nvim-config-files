@@ -1,4 +1,3 @@
-
 local nvim_lsp = require('lspconfig')
 local on_attach = require('my_plugins/for/lsp/clients/my-general-lsp-settings')
 -- Enable the following language servers
@@ -12,5 +11,6 @@ end
 
 require'lspconfig'.pylsp.setup{
 	cmd = { "pyls" },
+	on_attach = on_attach
 }
 

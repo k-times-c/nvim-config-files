@@ -1,7 +1,7 @@
 use {'mhartington/formatter.nvim', config = function() 
 	 require('formatter').setup {
-		 -- TODO: somehow get this to play nice with the internal equalprg and formatprg programs
-		 -- vim.g.formatexpr =Format
+		 -- TODO: use formatprg program
+		 -- vim.g.formatexpr = Format
 		 filetype = {
 			 lua = {
 				 -- luafmt

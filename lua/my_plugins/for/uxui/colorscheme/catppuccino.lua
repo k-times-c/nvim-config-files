@@ -1,7 +1,8 @@
-use { 
-	"Pocco81/Catppuccino.nvim",
+use {
+	"catppuccin/nvim",
 	config = function()
-		require('catppuccino').setup {
+		require('catppuccin').setup {
+			transparent_background = true,
 			integrations = {
 				transparency = false,
 				telescope = true,
@@ -16,4 +17,8 @@ use {
 		}
 	end
 }
-vim.cmd([[ colorscheme dark_catppuccino ]])
+
+vim.cmd([[ colorscheme catppuccin ]])
+
+-- vim.cmd([[ highlight! Normal ctermbg=NONE guibg=NONE]])
+-- vim.cmd([[ highlight! NonText ctermbg=NONE guibg=NONE]])
