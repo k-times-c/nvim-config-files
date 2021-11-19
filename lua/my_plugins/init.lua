@@ -8,10 +8,11 @@ use = require('packer').use
 return require('packer').startup(function(use)
 
 -- TODO: pull out to its own file
-  use 'wbthomason/packer.nvim'
+  use {'wbthomason/packer.nvim'}
 -- TODO: pull out to its own file
   use { 'andymass/vim-matchup', opt = true, keys = '%' }
-
+  use { 'tommcdo/vim-exchange' }
+  use {'wellle/targets.vim'}
   require('my_plugins/for/uxui')
   require('my_plugins/for/lsp')
   require('my_plugins/for/treesitter')
