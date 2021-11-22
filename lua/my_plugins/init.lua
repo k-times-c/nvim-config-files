@@ -12,10 +12,12 @@ return require('packer').startup(function(use)
 -- TODO: pull out to its own file
   use { 'andymass/vim-matchup', opt = true, keys = '%' }
   use { 'tommcdo/vim-exchange' }
-  use {'wellle/targets.vim'}
+  use { 'wellle/targets.vim' }
   require('my_plugins/for/uxui')
   require('my_plugins/for/lsp')
-  require('my_plugins/for/treesitter')
+  if vim.fn.has('Mac') == 1 then
+	require('my_plugins/for/treesitter')
+  end
   require('my_plugins/for/git')
   require('my_plugins/for/navigation')
   require('my_plugins/for/notetaking')
