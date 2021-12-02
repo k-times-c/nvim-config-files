@@ -1,3 +1,4 @@
+use { "vim-test/vim-test" }
 use { "rcarriga/vim-ultest", opt = true,
 	requires = "vim-test/vim-test",
 	run = ":UpdateRemotePlugins",
