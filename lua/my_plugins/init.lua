@@ -10,6 +10,8 @@ return require('packer').startup(function(use)
 -- TODO: pull out to its own file
   use {'wbthomason/packer.nvim'}
 -- TODO: pull out to its own file
+-- TODO: implement for json files
+  -- use { 'gennaro-tedesco/nvim-jqx', filetype = 'json' }
   use { 'andymass/vim-matchup', opt = true, keys = '%' }
   use { 'tommcdo/vim-exchange' }
   use { 'wellle/targets.vim' }

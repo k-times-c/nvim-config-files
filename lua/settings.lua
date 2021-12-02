@@ -1,3 +1,4 @@
+vim.g.loaded_netrwPlugin = true
 vim.g.loaded_tarPlugin = true
 vim.g.loaded_zipPlugin = true
 vim.g.loaded_tutor_mode_plugin = true
@@ -7,11 +8,10 @@ vim.g.loaded_2html_plugin = true
 vim.g.loaded_matchparen = true
 vim.g.loaded_matchit    = true
 
+vim.o.swapfile = false
 vim.o.hidden = true
 vim.o.wrap = false
 vim.o.ruler = true
-vim.o.wildignore = "**/node_modules/**,**/dist/**,*.pyc,*__pycache__/**,**/venv/**"
-if vim.fn.has('Mac') then vim.o.wildignore = vim.o.wildignore .. ',.DS_Store*' end
 vim.go.path = ".,,**3"
 vim.o.encoding = "utf8"
 -- vim.o.guifont = "Droid Sans Mono for Powerline Plus Nerd File Types 11"
@@ -27,6 +27,9 @@ vim.wo.number = true
 
 --Enable mouse mode
 vim.o.mouse = 'a'
+
+--Enable relative number
+vim.o.relativenumber = true
 
 --Enable break indent
 vim.o.breakindent = true
@@ -56,15 +59,12 @@ vim.opt.listchars:append("eol:↴")
 -- vim.opt.listchars.set('eol:↲,tab:»,trail:·,extends:<,precedes:>,conceal:┊,nbsp:␣')
 
 -- Highlight on yank
-vim.api.nvim_exec(
-  [[
+vim.cmd([[
   augroup YankHighlight
     autocmd!
     autocmd TextYankPost * silent! lua vim.highlight.on_yank()
   augroup end
-]],
-  false
-)
+]])
 
 if vim.fn.has("Mac") == 0 then
 	-- documentation has this listed as `vim.o.shell = has('win32') ? 'powershell' : 'pwsh'`
@@ -73,4 +73,8 @@ if vim.fn.has("Mac") == 0 then
 	vim.o.shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 	vim.o.shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 	vim.cmd([[ set shellquote= shellxquote= ]])
+	vim.o.wildignore = "**\\node_modules\\**,**\\dist\\**,*.pyc,*__pycache__\\**,**\\venv\\**"
+else
+	vim.o.wildignore = "**/node_modules/**,**/dist/**,*.pyc,*__pycache__/**,**/venv/**"
+	vim.o.wildignore = vim.o.wildignore .. ',.DS_Store*'
 end
