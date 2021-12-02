@@ -4,12 +4,12 @@ use {
   config = function()
 	local telescope = require('telescope')
 	telescope.setup {
-		 defaults = {
-		   preview = {
-		     check_mime_type = false
-		   },
-		 shorten_path = true
-		 }
+		defaults = {
+			preview = {
+				check_mime_type = false
+				},
+			shorten_path = true
+		}
 	}
 	-- To get fzf loaded and working with telescope, you need to call
 	-- load_extension, somewhere after setup function:
@@ -39,5 +39,8 @@ vim.api.nvim_set_keymap('n', "<leader>fh", "<cmd>Telescope help_tags<cr>", opts)
 vim.api.nvim_set_keymap('n', "<leader>f%", "<cmd>Telescope current_buffer_fuzzy_find<cr>", opts)
 -- TODO: on enter set the working directory for the buffer (if not possible then the window)
 vim.api.nvim_set_keymap('n', "<leader>f.", "<cmd>lua require('telescope.builtin').find_files({ prompt_title = 'find files in filenames current directory', cwd = '" .. vim.fn.expand('%:h')  .. "'})<cr>", opts)
-vim.api.nvim_set_keymap('n', "<leader>fs", "<cmd>lua require('telescope.builtin').file_browser({ prompt_title = 'nvim data', cwd = '~\\AppData\\Local\\nvim-data\\'})<cr>", opts)
+vim.api.nvim_set_keymap('n', "<leader>f-", "<cmd>lua require('telescope.builtin').file_browser({ prompt_title = 'plugins', cwd = '~\\AppData\\Local\\nvim-data\\'})<cr>", opts)
 vim.api.nvim_set_keymap('n', "<leader>fp", "<cmd>Telescope projects<cr>", opts)
+vim.api.nvim_set_keymap('n', "<c-g>c", "<cmd>Telescope git_bcommits<cr>", opts)
+vim.api.nvim_set_keymap('n', "<c-g>b", "<cmd>Telescope git_branches<cr>", opts)
+-- C:/Users/gruq/AppData/Local/nvim-data/site/pack/packer/start/
