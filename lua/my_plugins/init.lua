@@ -1,3 +1,4 @@
+use 'lewis6991/impatient.nvim'
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -13,7 +14,7 @@ return require('packer').startup({function(use)
    use {'wbthomason/packer.nvim'}
   -- TODO: pull into to its own file
   -- TODO: implement for json files
-    -- use { 'gennaro-tedesco/nvim-jqx', filetype = 'json' }
+    use { 'gennaro-tedesco/nvim-jqx', filetype = 'json' }
     use { 'andymass/vim-matchup', opt = true, keys = '%' }
     use { 'tommcdo/vim-exchange' }
     use { 'wellle/targets.vim' }
