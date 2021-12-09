@@ -7,9 +7,10 @@ vim.cmd([[
 vim.api.nvim_set_keymap('n', 'gV', '`[v`]', { noremap = true } )
 vim.api.nvim_set_keymap('n', 'gf', "<cmd>normal! vi'gf<cr>", { noremap = true } )
 vim.api.nvim_set_keymap('n', 'Y', "yg_", { noremap = true } )
-vim.api.nvim_set_keymap('n', '<leader>gfn', '<cmd>let @"=@%<CR>', { noremap = true } )
+vim.api.nvim_set_keymap('n', 'y<C-g>', '<cmd>let @"=@%<CR>', { noremap = true } )
 vim.api.nvim_set_keymap('n', '<C-s>', '<cmd>update<CR>', { noremap = true } )
--- vim.api.nvim_set_keymap('n', '<leader>x', ':normal lua ', { noremap = true } )
+vim.api.nvim_set_keymap('n', ',x', ':normal lua ', { noremap = true } )
+vim.api.nvim_set_keymap('v', '<BS>', '"_d', { noremap = true } )
 --[[ vim.cmd( [[
 	function! kxclark#StripTrailingWhitespaces()
 		"taken from vimcasts
