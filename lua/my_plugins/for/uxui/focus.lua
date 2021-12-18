@@ -4,3 +4,4 @@ use { "beauwilliams/focus.nvim", opt = true,
 	      require("focus").setup() 
 end
 }
+vim.api.nvim_set_keymap('n', 'ZE', '<cmd>:FocusEnable<CR>', { noremap = true } )

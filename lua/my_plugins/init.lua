@@ -1,6 +1,4 @@
-local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
+local fn = vim.fn local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim' if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
 end
 
@@ -8,14 +6,22 @@ use = require('packer').use
 return require('packer').startup({function(use)
 
   -- TODO: pull into to its own file
-    use 'lewis6991/impatient.nvim'
     require('packer_compiled')
+    use {'5long/pytest-vim-compiler'}
+    use {'AndrewRadev/switch.vim', keys = 'gs' }
+    use {'AndrewRadev/splitjoin.vim', keys = {'gS', 'gJ'} }
+    use {'famiu/bufdelete.nvim',  cmd = { 'Bdelete', 'Bwipeout' } }
+    use {'wthollingsworth/pomodoro.nvim', requires = 'MunifTanjim/nui.nvim'}
+    use 'lewis6991/impatient.nvim'
+    -- TODO: think of a way to fix the lazy loading of this function within vim-test (function wrapper?)
     use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
+    use 'tpope/vim-obsession'
+    use { 'iamcco/markdown-preview.nvim', ft = 'markdown' }
     use {'wbthomason/packer.nvim'}
-    use { 'gennaro-tedesco/nvim-jqx', filetype = 'json' }
-    use { 'andymass/vim-matchup', opt = true, keys = '%' }
-    use { 'tommcdo/vim-exchange' }
-    use { 'wellle/targets.vim' }
+    use {'gennaro-tedesco/nvim-jqx', filetype = 'json'}
+    use {'andymass/vim-matchup', opt = true, keys = '%' }
+    use {'tommcdo/vim-exchange'}
+    use {'wellle/targets.vim'}
     require('my_plugins/for/uxui')
     require('my_plugins/for/lsp')
     if vim.fn.has('Mac') == 1 then
