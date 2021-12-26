@@ -9,19 +9,13 @@ return require('packer').startup({function(use)
     require('packer_compiled')
     use 'lewis6991/impatient.nvim'
     use {'5long/pytest-vim-compiler'}
-    use {'AndrewRadev/switch.vim', keys = 'gs' }
-    use {'AndrewRadev/splitjoin.vim', keys = {'gS', 'gJ'} }
-    use {'famiu/bufdelete.nvim',  cmd = { 'Bdelete', 'Bwipeout' } }
     use {'wthollingsworth/pomodoro.nvim', requires = 'MunifTanjim/nui.nvim', cmd = { 'PomodoroStart', 'PomodoroStop', 'PomodoroStatus'}}
     -- TODO: think of a way to fix the lazy loading of this function within vim-test (function wrapper?)
     use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
     use {'tpope/vim-obsession', cmd = 'Obsession' }
     use { 'iamcco/markdown-preview.nvim', ft = 'markdown' }
     use {'wbthomason/packer.nvim'}
-    use {'gennaro-tedesco/nvim-jqx', filetype = 'json'}
-    use {'andymass/vim-matchup', opt = true, keys = '%' }
-    use {'tommcdo/vim-exchange'}
-    use {'wellle/targets.vim'}
+    use {'gennaro-tedesco/nvim-jqx', opt = true, filetype = 'json'}
     require('my_plugins/for/uxui')
     require('my_plugins/for/lsp')
     if vim.fn.has('Mac') == 1 then
