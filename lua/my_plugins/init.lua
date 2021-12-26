@@ -7,15 +7,15 @@ return require('packer').startup({function(use)
 
   -- TODO: pull into to its own file
     require('packer_compiled')
+    use 'lewis6991/impatient.nvim'
     use {'5long/pytest-vim-compiler'}
     use {'AndrewRadev/switch.vim', keys = 'gs' }
     use {'AndrewRadev/splitjoin.vim', keys = {'gS', 'gJ'} }
     use {'famiu/bufdelete.nvim',  cmd = { 'Bdelete', 'Bwipeout' } }
     use {'wthollingsworth/pomodoro.nvim', requires = 'MunifTanjim/nui.nvim'}
-    use 'lewis6991/impatient.nvim'
     -- TODO: think of a way to fix the lazy loading of this function within vim-test (function wrapper?)
     use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
-    use 'tpope/vim-obsession'
+    use {'tpope/vim-obsession', cmd = 'Obsession' }
     use { 'iamcco/markdown-preview.nvim', ft = 'markdown' }
     use {'wbthomason/packer.nvim'}
     use {'gennaro-tedesco/nvim-jqx', filetype = 'json'}

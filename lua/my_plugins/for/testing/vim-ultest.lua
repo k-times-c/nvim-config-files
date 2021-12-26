@@ -1,7 +1,7 @@
 use { "rcarriga/vim-ultest", opt = true,
 	requires = "vim-test/vim-test",
-	run = ":UpdateRemotePlugins",
-	config = function ()
+	-- run = ":UpdateRemotePlugins",
+	config = function()
 		require('ultest').setup({
 		-- vim.cmd( [[ let test#python#pytest#options = "--color=yes" ]])
 		vim.cmd("let g:ultest_use_pty = 1"),

@@ -6,7 +6,7 @@ vim.cmd([[
 
 
 vim.api.nvim_set_keymap('n', 'gV', '`[v`]', { noremap = true } )
-vim.api.nvim_set_keymap('n', 'gf', "<cmd>normal! vi'gf<cr>", { noremap = true } )
+-- vim.api.nvim_set_keymap('n', 'gf', "<cmd>normal! vi'gf<cr>", { noremap = true } )
 vim.api.nvim_set_keymap('n', 'y<C-g>', [[<cmd>let @" = expand('%:p')<cr>]], { noremap = true } )
 vim.api.nvim_set_keymap('n', '<C-s>', '<cmd>update<CR>', { noremap = true } )
 vim.api.nvim_set_keymap('n', ',x', ':normal lua vim.cmd(vim.api.nvim_get_current_line())<CR>', { noremap = true } )
