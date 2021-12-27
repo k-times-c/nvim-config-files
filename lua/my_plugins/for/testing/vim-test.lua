@@ -8,4 +8,4 @@ vim.api.nvim_set_keymap('n', 't<C-v>', '<cmd>TestVisit<CR>', { noremap = true } 
 
 -- vim.cmd[[ let test#strategy = { 'nearest': 'neovim', 'file': 'dispatch' , 'suite': 'basic' } ]]
 -- TODO: add pytest compiler err-formatter
-vim.g['test#strategy'] = { nearest = 'neovim', file = 'dispatch' , suite = 'basic' }
+-- vim.g['test#strategy'] = { nearest = 'neovim', file = 'dispatch' , suite = 'basic' }

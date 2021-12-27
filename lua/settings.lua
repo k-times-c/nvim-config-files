@@ -29,7 +29,7 @@ vim.wo.number = true
 vim.o.mouse = 'a'
 
 --Enable relative number
-vim.o.relativenumber = true
+vim.o.relativenumber = false
 
 --Enable break indent
 vim.o.breakindent = true

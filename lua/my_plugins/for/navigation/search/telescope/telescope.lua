@@ -39,7 +39,7 @@ vim.api.nvim_set_keymap('n', "<leader>fb", "<cmd>lua require('telescope.builtin'
 vim.api.nvim_set_keymap('n', "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
 vim.api.nvim_set_keymap('n', "<leader>fg", "<cmd>Telescope live_grep<cr>", opts)
 vim.api.nvim_set_keymap('n', "<leader>fh", "<cmd>Telescope help_tags<cr>", opts)
-vim.api.nvim_set_keymap('n', "<leader>f%", "<cmd>Telescope current_buffer_fuzzy_find<cr>", opts)
+vim.api.nvim_set_keymap('n', "<leader>f/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", opts)
 -- TODO: on enter set the working directory for the buffer (if not possible then the window)
 vim.api.nvim_set_keymap('n', "<leader>f.", "<cmd>lua require('telescope.builtin').find_files({ prompt_title = 'find files in filenames current directory', cwd = '" .. vim.fn.expand('%:h')  .. "'})<cr>", opts)
 vim.api.nvim_set_keymap('n', "<leader>fp", "<cmd>Telescope projects<cr>", opts)
@@ -52,4 +52,5 @@ vim.api.nvim_set_keymap('n', "<leader>gb", "<cmd>Telescope git_branches<cr>", op
 if vim.fn.has('Mac') == 0 then
   vim.api.nvim_set_keymap('n', "<leader>fof", "<cmd>lua require('telescope.builtin').find_files({prompt_title = '< omniFileTransfer >', cwd = '~/Development/Omni/omniFileTransfer'})<cr>", opts)
   vim.api.nvim_set_keymap('n', "<leader>foc", "<cmd>lua require('telescope.builtin').find_files({prompt_title = '< omniCodec >', cwd = '~/Development/Omni/omniCodec'})<cr>", opts)
+  vim.api.nvim_set_keymap('n', "<leader>fot", "<cmd>lua require('telescope.builtin').find_files({prompt_title = '< omniCodec >', cwd = '~/Development/Omni/omniCodecTestContainer'})<cr>", opts)
 end
