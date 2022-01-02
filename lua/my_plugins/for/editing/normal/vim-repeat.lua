@@ -1,2 +1,2 @@
-use { "tpope/vim-repeat" }
+use { "tpope/vim-repeat", keys = '.' }
 
