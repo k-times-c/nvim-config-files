@@ -12,6 +12,7 @@ return require('packer').startup({function(use)
     use {'wthollingsworth/pomodoro.nvim', requires = 'MunifTanjim/nui.nvim', cmd = { 'PomodoroStart', 'PomodoroStop', 'PomodoroStatus'}}
     -- TODO: think of a way to fix the lazy loading of this function within vim-test (function wrapper?)
     use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
+    use 'kassio/neoterm'
     use {'tpope/vim-obsession', cmd = 'Obsession' }
     use { 'iamcco/markdown-preview.nvim', ft = 'markdown' }
     use {'wbthomason/packer.nvim'}
