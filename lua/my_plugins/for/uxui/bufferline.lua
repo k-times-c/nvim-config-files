@@ -4,8 +4,9 @@ use { 'akinsho/bufferline.nvim',
 		require('bufferline').setup {
 			options = {
 				diagnostics = "nvim_lsp",
-				custom_filter = function(buf_number) 
-					if vim.bo[buf_number].filetype ~= "vimwiki" then
+				custom_filter = function(buf_number)
+					local ft = vim.bo[buf_number].filetype
+					if ft ~= "vimwiki" or ft ~= 'qf' then
 						return true
 					end
 				end
