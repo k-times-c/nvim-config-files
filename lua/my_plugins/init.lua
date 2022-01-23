@@ -1,4 +1,6 @@
-local fn = vim.fn local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim' if fn.empty(fn.glob(install_path)) > 0 then
+local fn = vim.fn
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
 end
 
@@ -12,16 +14,13 @@ return require('packer').startup({function(use)
     use {'wthollingsworth/pomodoro.nvim', requires = 'MunifTanjim/nui.nvim', cmd = { 'PomodoroStart', 'PomodoroStop', 'PomodoroStatus'}}
     -- TODO: think of a way to fix the lazy loading of this function within vim-test (function wrapper?)
     use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
-    use 'kassio/neoterm'
     use {'tpope/vim-obsession', cmd = 'Obsession' }
     use { 'iamcco/markdown-preview.nvim', ft = 'markdown' }
     use {'wbthomason/packer.nvim'}
     use {'gennaro-tedesco/nvim-jqx', opt = true, filetype = 'json'}
     require('my_plugins/for/uxui')
     require('my_plugins/for/lsp')
-    if vim.fn.has('Mac') == 1 then
-  	require('my_plugins/for/treesitter')
-    end
+    require('my_plugins/for/treesitter')
     require('my_plugins/for/git')
     require('my_plugins/for/navigation')
     require('my_plugins/for/notetaking')
@@ -30,7 +29,7 @@ return require('packer').startup({function(use)
     require('my_plugins/for/code-running')
     require('my_plugins/for/editing')
     require('my_plugins/for/debugging')
-  
+
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then

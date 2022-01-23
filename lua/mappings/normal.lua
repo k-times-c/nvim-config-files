@@ -11,7 +11,7 @@ vim.api.nvim_set_keymap('n', 'y<C-g>', [[<cmd>let @" = expand('%:p')<cr>]], { no
 vim.api.nvim_set_keymap('n', '<C-s>', '<cmd>update<CR>', { noremap = true } )
 -- TODO: fix this mapping
 vim.api.nvim_set_keymap('n', ',x', ':normal lua vim.cmd(vim.inspect(vim.api.nvim_get_current_line()))<CR>', { noremap = true } )
-vim.api.nvim_set_keymap('n', ',,x', ':luafile %<CR>', { noremap = true } )
+vim.api.nvim_set_keymap('n', ',,x', ':update <bar> luafile %<CR>', { noremap = true } )
 vim.api.nvim_set_keymap('v', '<BS>', '"_d', { noremap = true } )
 vim.api.nvim_set_keymap('n', 'Z<BS>', '<cmd>Bdelete!<CR>', { noremap = true } )
 vim.api.nvim_set_keymap('n', '<bslash>q', '<cmd>cwindow<CR>', { noremap = true } )

@@ -1,21 +1,43 @@
 
 use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',
-config = function()
-	local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
-	require('nvim-treesitter.configs').setup {
-		highlight = {
-			enable = true,
-			custom_captures = {
-				-- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-				["foo.bar"] = "Identifier",
-			},
-			-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-			-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-			-- Using this option may slow down your editor, and you may see some duplicate highlights.
-			-- Instead of true it can also be a list of languages
-			additional_vim_regex_highlighting = false,
-		},
-	}
-end
+  config = function()
+    if vim.fn.has('Mac') == 0 then
+      require 'nvim-treesitter.install'.compilers = { "clang" }
+    end
+    -- require 'nvim-treesitter.install'.prefer_git = true
+
+    local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
+
+    parser_configs.norg = {
+        install_info = {
+            url = "https://github.com/nvim-neorg/tree-sitter-norg",
+            files = { "src/parser.c", "src/scanner.cc" },
+            branch = "main"
+        },
+    }
+
+    parser_configs.norg_meta = {
+        install_info = {
+            url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
+            files = { "src/parser.c" },
+            branch = "main"
+        },
+    }
+
+    parser_configs.norg_table = {
+        install_info = {
+            url = "https://github.com/nvim-neorg/tree-sitter-norg-table",
+            files = { "src/parser.c" },
+            branch = "main"
+        },
+    }
+
+    require('nvim-treesitter.configs').setup {
+      ensure_installed = {'python', 'go', 'bash', 'lua', --[[ "norg", "norg_meta", "norg_table" ]]},
+      highlight = {
+        enable = true,
+      },
+    }
+  end
 }
 -- use { 'nvim-treesitter/nvim-treesitter-refactor', after = 'nvim-treesitter' }

@@ -7,5 +7,7 @@ vim.api.nvim_set_keymap('n', 't<C-l>', '<cmd>TestLast<CR>', { noremap = true } )
 vim.api.nvim_set_keymap('n', 't<C-v>', '<cmd>TestVisit<CR>', { noremap = true } )
 
 -- vim.cmd[[ let test#strategy = { 'nearest': 'neovim', 'file': 'dispatch' , 'suite': 'basic' } ]]
+-- vim.cmd['test#strategy'] = {'nearest': 'neovim', 'file': 'dispatch' , 'suite': 'basic'}
 -- TODO: add pytest compiler err-formatter
 -- vim.g['test#strategy'] = { nearest = 'neovim', file = 'dispatch' , suite = 'basic' }
+-- vim.g.['test#python#pytest#options'] = "--color=yes"

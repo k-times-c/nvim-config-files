@@ -33,8 +33,8 @@ local opts = { noremap = true }
 vim.api.nvim_set_keymap('n', "<leader>fl", "<cmd>Telescope buffers<cr>", opts)
 vim.api.nvim_set_keymap('n', "<leader>fc", "<cmd>Telescope commands<cr>", opts)
 vim.api.nvim_set_keymap('n', "<leader>fk", "<cmd>Telescope keymaps<cr>", opts)
-vim.api.nvim_set_keymap('n', "<leader>fn", "<cmd>lua require('telescope.builtin').find_files({prompt_title = 'nvim config', cwd = '" .. config_home .. "'})<cr>", opts)
-vim.api.nvim_set_keymap('n', "<leader>fs", "<cmd>lua require('telescope.builtin').file_browser({ prompt_title = 'plugins', cwd = '~\\AppData\\Local\\nvim-data\\site'})<cr>", opts)
+vim.api.nvim_set_keymap('n', "<leader>fn", "<cmd>lua require('telescope.builtin').find_files({prompt_title = 'nvim config', cwd = '" .. config_home .. "'})<cr>", { noremap = true, nowait = true })
+vim.api.nvim_set_keymap('n', "<leader>fs", "<cmd>lua require('telescope.builtin').file_browser({ prompt_title = 'plugins', cwd = '~/AppData/Local/nvim-data/site'})<cr>", { noremap = true, nowait = true })
 vim.api.nvim_set_keymap('n', "<leader>fb", "<cmd>lua require('telescope.builtin').file_browser()<cr>", opts)
 vim.api.nvim_set_keymap('n', "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
 vim.api.nvim_set_keymap('n', "<leader>fg", "<cmd>Telescope live_grep<cr>", opts)
@@ -50,7 +50,7 @@ vim.api.nvim_set_keymap('n', "<leader>gb", "<cmd>Telescope git_branches<cr>", op
 -- C:/Users/gruq/AppData/Local/nvim-data/site/pack/packer/start/
 
 if vim.fn.has('Mac') == 0 then
-  vim.api.nvim_set_keymap('n', "<leader>fof", "<cmd>lua require('telescope.builtin').find_files({prompt_title = '< omniFileTransfer >', cwd = '~/Development/Omni/omniFileTransfer'})<cr>", opts)
-  vim.api.nvim_set_keymap('n', "<leader>foc", "<cmd>lua require('telescope.builtin').find_files({prompt_title = '< omniCodec >', cwd = '~/Development/Omni/omniCodec'})<cr>", opts)
-  vim.api.nvim_set_keymap('n', "<leader>fot", "<cmd>lua require('telescope.builtin').find_files({prompt_title = '< omniCodec >', cwd = '~/Development/Omni/omniCodecTestContainer'})<cr>", opts)
+  -- vim.api.nvim_set_keymap('n', "<leader>fof", "<cmd>lua require('telescope.builtin').find_files({prompt_title = '< omniFileTransfer >', cwd = '~/Development/Omni/omniFileTransfer'})<cr>", opts)
+  -- vim.api.nvim_set_keymap('n', "<leader>foc", "<cmd>lua require('telescope.builtin').find_files({prompt_title = '< omniCodec >', cwd = '~/Development/Omni/omniCodec'})<cr>", opts)
+  -- vim.api.nvim_set_keymap('n', "<leader>fot", "<cmd>lua require('telescope.builtin').find_files({prompt_title = '< omniCodec >', cwd = '~/Development/Omni/omniCodecTestContainer'})<cr>", opts)
 end
