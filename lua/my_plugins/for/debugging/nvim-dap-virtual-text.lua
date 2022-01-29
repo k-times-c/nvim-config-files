@@ -1,4 +1,6 @@
-use { 'theHamsta/nvim-dap-virtual-text', opt = true, requires = {'mfussenegger/nvim-dap', 'nvim-treesitter/nvim-treesitter'},
+use { 'theHamsta/nvim-dap-virtual-text',
+    after = 'nvim-dap',
+    requires = {'mfussenegger/nvim-dap', 'nvim-treesitter/nvim-treesitter'},
 config = function()
 	require('nvim-dap-virtual-text').setup()
 end}

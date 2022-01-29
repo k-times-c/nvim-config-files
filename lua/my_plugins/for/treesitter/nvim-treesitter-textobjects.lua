@@ -92,6 +92,6 @@ use { "nvim-treesitter/nvim-treesitter-textobjects", -- opt = true }
       },
     }
     vim.o.foldmethod = 'expr'
-    vim.o.foldexpr = 'treesitter#foldexpr()'
+    vim.o.foldlevel = 99
   end
 }

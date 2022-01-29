@@ -10,6 +10,6 @@ use {'famiu/bufdelete.nvim',  cmd = { 'Bdelete', 'Bwipeout' } }
 use {'tommcdo/vim-exchange'}
 use {'wellle/targets.vim',
 	config = function()
-		vim.g.targets_nl = 'nN'
 	end
 }
+vim.g.targets_nl = 'nN'

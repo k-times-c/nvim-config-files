@@ -1,5 +1,5 @@
 use {'mfussenegger/nvim-dap',
-  -- ft = { 'python', 'lua' },
+  ft = { 'python', 'lua' },
   requires = { "nvim-dap-virtual-text", "rcarriga/nvim-dap-ui" },
   config = function()
     vim.api.nvim_set_keymap('n', '<leader>dc', '<cmd>lua require"dap".continue()<CR>', { noremap = true })

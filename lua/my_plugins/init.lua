@@ -8,16 +8,36 @@ use = require('packer').use
 return require('packer').startup({function(use)
 
   -- TODO: pull into to its own file
+    vim.api.nvim_set_keymap('n', '<leader>p ', ':Packer ', { noremap = true})
+    vim.api.nvim_set_keymap('n', '<leader>pl', ':PackerLoad ', { noremap = true})
+    vim.api.nvim_set_keymap('n', '<leader>ps', '<cmd>PackerStatus<cr>', { noremap = true})
+    vim.api.nvim_set_keymap('n', '<leader>py', ':PackerSync<cr>', { noremap = true})
+    vim.api.nvim_set_keymap('n', '<leader>pc', ':PackerCompile<cr>', { noremap = true})
+    vim.api.nvim_set_keymap('n', '<leader>pu', ':PackerUpdate<cr>', { noremap = true})
+    vim.api.nvim_set_keymap('n', '<leader>pp', ':PackerProfile<cr>', { noremap = true})
     require('packer_compiled')
     use 'lewis6991/impatient.nvim'
     use {'5long/pytest-vim-compiler'}
+    use {'sheerun/vim-polyglot', opt = true}
     use {'wthollingsworth/pomodoro.nvim', requires = 'MunifTanjim/nui.nvim', cmd = { 'PomodoroStart', 'PomodoroStop', 'PomodoroStatus'}}
-    -- TODO: think of a way to fix the lazy loading of this function within vim-test (function wrapper?)
+    -- TODO: think of a way to fix the lazy loading of this function within vim-test (function wrapper? // after keyword)
     use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
     use {'tpope/vim-obsession', cmd = 'Obsession' }
     use { 'iamcco/markdown-preview.nvim', ft = 'markdown' }
+    --TODO: add packer remaps to the config function
     use {'wbthomason/packer.nvim'}
     use {'gennaro-tedesco/nvim-jqx', opt = true, filetype = 'json'}
+    use {'bronson/vim-visual-star-search', opt = true, keys = {'#', ' #', '*', ' *'} }
+    use {
+      'kyazdani42/nvim-tree.lua',
+      requires = {
+        'kyazdani42/nvim-web-devicons', -- optional, for file icon
+      },
+      config = function()
+        require'nvim-tree'.setup {}
+          vim.api.nvim_set_keymap('n', '||', '<cmd>NvimTreeToggle<cr>', { noremap = true})
+      end
+    }
     require('my_plugins/for/uxui')
     require('my_plugins/for/lsp')
     require('my_plugins/for/treesitter')

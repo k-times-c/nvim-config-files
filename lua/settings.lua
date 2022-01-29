@@ -7,7 +7,7 @@ vim.g.loaded_gzip = true
 vim.g.loaded_2html_plugin = true
 vim.g.loaded_matchparen = true
 vim.g.loaded_matchit    = true
-
+vim.g.syntax_on = true
 vim.o.swapfile = false
 vim.o.hidden = true
 vim.o.wrap = false

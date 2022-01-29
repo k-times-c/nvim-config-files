@@ -1,6 +1,5 @@
 -- init.lua
-use { "lukas-reineke/indent-blankline.nvim", 
-	opt = true,
+use { "lukas-reineke/indent-blankline.nvim",
 	cmd = "IndentBlankLineEnable",
 	config = function()
 		require('indent_blankline').setup{
