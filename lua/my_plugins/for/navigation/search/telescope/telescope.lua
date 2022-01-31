@@ -21,6 +21,7 @@ use {
 
 
 local config_home = ''
+local install_path = vim.fn.stdpath('data')..'/site/pack/packer/'
 
 if vim.fn.has('Mac') == 1 then
   config_home = '~/.config/nvim/'
@@ -35,7 +36,7 @@ vim.api.nvim_set_keymap('n', "<leader>fl", "<cmd>Telescope buffers<cr>", opts)
 vim.api.nvim_set_keymap('n', "<leader>fc", "<cmd>Telescope commands<cr>", opts)
 vim.api.nvim_set_keymap('n', "<leader>fk", "<cmd>Telescope keymaps<cr>", opts)
 vim.api.nvim_set_keymap('n', "<leader>fn", "<cmd>lua require('telescope.builtin').find_files({prompt_title = 'nvim config', cwd = '" .. config_home .. "'})<cr>", { noremap = true, nowait = true })
-vim.api.nvim_set_keymap('n', "<leader>fs", "<cmd>Telescope file_browser cwd=~/AppData/Local/nvim-data/site/pack/packer/<cr>", { noremap = true, nowait = true })
+vim.api.nvim_set_keymap('n', "<leader>fs", "<cmd>Telescope file_browser cwd=" .. install_path .. "<cr>", { noremap = true, nowait = true })
 vim.api.nvim_set_keymap('n', "<leader>fb", "<cmd>Telescope file_browser<cr>", opts)
 vim.api.nvim_set_keymap('n', "-", "<cmd>Telescope file_browser path=%:p:h<cr>", opts)
 vim.api.nvim_set_keymap('n', "<leader>ff", "<cmd>Telescope find_files<cr>", opts)

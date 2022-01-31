@@ -3,8 +3,10 @@ use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',
   config = function()
     if vim.fn.has('Mac') == 0 then
       require 'nvim-treesitter.install'.compilers = { "clang" }
+    else
+      -- require 'nvim-treesitter.install'.compilers = { "gcc" }
+      -- require 'nvim-treesitter.install'.prefer_git = true
     end
-    -- require 'nvim-treesitter.install'.prefer_git = true
 
     local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
 
@@ -36,6 +38,24 @@ use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',
       ensure_installed = {'python', 'go', 'bash', 'lua', --[[ "norg", "norg_meta", "norg_table" ]]},
       highlight = {
         enable = true,
+      },
+      refactor = {
+        smart_rename = {
+          enable = true,
+          keymaps = {
+            smart_rename = "grr",
+          },
+       },
+       navigation = {
+         enable = true,
+         keymaps = {
+           goto_definition_lsp_fallback = "gd",
+           list_definitions = "[D",
+           list_definitions_toc = "gO",
+           goto_next_usage = "]i",
+           goto_previous_usage = "[i",
+         },
+       },
       },
     }
   end

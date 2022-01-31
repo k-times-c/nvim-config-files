@@ -1,11 +1,11 @@
 use {'mfussenegger/nvim-dap',
-  ft = { 'python', 'lua' },
+  -- ft = { 'python', 'lua' },
   requires = { "nvim-dap-virtual-text", "rcarriga/nvim-dap-ui" },
   config = function()
-    vim.api.nvim_set_keymap('n', '<leader>dc', '<cmd>lua require"dap".continue()<CR>', { noremap = true })
-    vim.api.nvim_set_keymap('n', '<leader>dn', '<cmd>lua require"dap".step_over()<CR>', { noremap = true })
-    vim.api.nvim_set_keymap('n', '<leader>di', '<cmd>lua require"dap".step_into()<CR>', { noremap = true })
-    vim.api.nvim_set_keymap('n', '<leader>do', '<cmd>lua require"dap".step_out()<CR>', { noremap = true })
+    vim.api.nvim_set_keymap('n', '<leader>dG', '<cmd>lua require"dap".continue()<CR>', { noremap = true })
+    vim.api.nvim_set_keymap('n', '<leader>dl', '<cmd>lua require"dap".step_over()<CR>', { noremap = true })
+    vim.api.nvim_set_keymap('n', '<leader>dj', '<cmd>lua require"dap".step_into()<CR>', { noremap = true })
+    vim.api.nvim_set_keymap('n', '<leader>dk', '<cmd>lua require"dap".step_out()<CR>', { noremap = true })
     vim.api.nvim_set_keymap('n', '<leader>db', '<cmd>lua require"dap".toggle_breakpoint()<CR>', { noremap = true })
     vim.api.nvim_set_keymap('n', '<leader>dB', '<cmd>lua require"dap".set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true })
     vim.api.nvim_set_keymap('n', '<leader>dp', '<cmd>lua require"dap".set_breakpoint(nil, nil, vim.fn.input("Log point message: "))<CR>', { noremap = true })

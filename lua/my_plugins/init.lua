@@ -19,6 +19,21 @@ return require('packer').startup({function(use)
     use 'lewis6991/impatient.nvim'
     use {'5long/pytest-vim-compiler'}
     use {'sheerun/vim-polyglot', opt = true}
+    use {
+      "ThePrimeagen/refactoring.nvim",
+      requires = {
+        {"nvim-lua/plenary.nvim"},
+        {"nvim-treesitter/nvim-treesitter"}
+      },
+      config = function()
+        require('refactoring').setup({})
+        -- Remaps for each of the four debug operations currently offered by the plugin
+        vim.api.nvim_set_keymap("v", "<Leader>re", [[ <Cmd>lua require('refactoring').refactor('Extract Function')<CR>]], { noremap = true, silent = true })
+        vim.api.nvim_set_keymap("v", "<Leader>rf", [[ <Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]], { noremap = true, silent = true })
+        vim.api.nvim_set_keymap("v", "<Leader>rv", [[ <Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]], { noremap = true, silent = true })
+        vim.api.nvim_set_keymap("v", "<Leader>ri", [[ <Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]], { noremap = true, silent = true })
+    end
+    }
     use {'wthollingsworth/pomodoro.nvim', requires = 'MunifTanjim/nui.nvim', cmd = { 'PomodoroStart', 'PomodoroStop', 'PomodoroStatus'}}
     -- TODO: think of a way to fix the lazy loading of this function within vim-test (function wrapper? // after keyword)
     use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
@@ -38,6 +53,7 @@ return require('packer').startup({function(use)
           vim.api.nvim_set_keymap('n', '||', '<cmd>NvimTreeToggle<cr>', { noremap = true})
       end
     }
+
     require('my_plugins/for/uxui')
     require('my_plugins/for/lsp')
     require('my_plugins/for/treesitter')
