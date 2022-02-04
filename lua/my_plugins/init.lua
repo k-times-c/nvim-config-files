@@ -36,6 +36,15 @@ return require('packer').startup({function(use)
     }
     use {'wthollingsworth/pomodoro.nvim', requires = 'MunifTanjim/nui.nvim', cmd = { 'PomodoroStart', 'PomodoroStop', 'PomodoroStatus'}}
     -- TODO: think of a way to fix the lazy loading of this function within vim-test (function wrapper? // after keyword)
+    use { 'akinsho/toggleterm.nvim',
+        config = function()
+          require("toggleterm").setup{
+            open_mapping = '<c-_>',
+          }
+          -- vim.api.nvim_set_keymap('n', '<C-_>', '<cmd>ToggleTerm<cr>', { noremap = true } )
+          -- vim.api.nvim_set_keymap('t', '<C-_>', '<cmd>ToggleTerm<cr>', { noremap = true } )
+        end
+    }
     use {'tpope/vim-dispatch', opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}}
     use {'tpope/vim-obsession', cmd = 'Obsession' }
     use { 'iamcco/markdown-preview.nvim', ft = 'markdown' }
@@ -50,7 +59,7 @@ return require('packer').startup({function(use)
       },
       config = function()
         require'nvim-tree'.setup {}
-          vim.api.nvim_set_keymap('n', '||', '<cmd>NvimTreeToggle<cr>', { noremap = true})
+        vim.api.nvim_set_keymap('n', '||', '<cmd>NvimTreeToggle<cr>', { noremap = true})
       end
     }
 
@@ -73,6 +82,6 @@ return require('packer').startup({function(use)
     end
   end,
   config = {
-  	compile_path = vim.fn.stdpath('config')..'/lua/packer_compiled.lua'
+    compile_path = vim.fn.stdpath('config')..'/lua/packer_compiled.lua'
   }
 })

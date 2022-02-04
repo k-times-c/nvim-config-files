@@ -33,7 +33,8 @@ local snippets = {
       t("today's date: "),
       d(1, date_input, {}, "%A, %B %d of %Y"),
       t(""),
-    })
+    }),
+    s("j", {t("{https://jira.nordstrom.com/browse/CREDIT-"), i(1, "###"), t("}")} )
 }
 
 return snippets
