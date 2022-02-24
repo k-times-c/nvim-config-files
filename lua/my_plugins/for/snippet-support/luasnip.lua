@@ -40,12 +40,14 @@ end
 
 _G.snippets_clear()
 
-vim.cmd [[
+local snippet_dir = vim.fn.stdpath('config') .. "/lua/snippets/"
+local autocommand = [[
 augroup snippets_clear
 au!
-au BufWritePost ~/.config/nvim/lua/snippets/*.lua lua _G.snippets_clear()
+au BufWritePost ]] .. snippet_dir .. [[*.lua lua _G.snippets_clear()
 augroup END
 ]]
+vim.cmd(autocommand)
 
 function _G.edit_ft()
   -- returns table like {"lua", "all"}
@@ -55,7 +57,7 @@ function _G.edit_ft()
   }, function(item, idx)
     -- selection aborted -> idx == nil
     if idx then
-      vim.cmd("edit ~/.config/nvim/lua/snippets/"..item..".lua")
+      vim.cmd("edit " .. snippet_dir ..item..".lua")
     end
   end)
 end

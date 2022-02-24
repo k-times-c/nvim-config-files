@@ -8,13 +8,6 @@ use = require('packer').use
 return require('packer').startup({function(use)
 
   -- TODO: pull into to its own file
-    vim.api.nvim_set_keymap('n', '<leader>p ', ':Packer ', { noremap = true})
-    vim.api.nvim_set_keymap('n', '<leader>pl', ':PackerLoad ', { noremap = true})
-    vim.api.nvim_set_keymap('n', '<leader>ps', '<cmd>PackerStatus<cr>', { noremap = true})
-    vim.api.nvim_set_keymap('n', '<leader>py', ':PackerSync<cr>', { noremap = true})
-    vim.api.nvim_set_keymap('n', '<leader>pc', ':PackerCompile<cr>', { noremap = true})
-    vim.api.nvim_set_keymap('n', '<leader>pu', ':PackerUpdate<cr>', { noremap = true})
-    vim.api.nvim_set_keymap('n', '<leader>pp', ':PackerProfile<cr>', { noremap = true})
     require('packer_compiled')
     use 'lewis6991/impatient.nvim'
     use {'5long/pytest-vim-compiler'}
@@ -49,8 +42,18 @@ return require('packer').startup({function(use)
     use {'tpope/vim-obsession', cmd = 'Obsession' }
     use { 'iamcco/markdown-preview.nvim', ft = 'markdown' }
     --TODO: add packer remaps to the config function
-    use {'wbthomason/packer.nvim'}
+    use {'wbthomason/packer.nvim', config = function()
+      vim.api.nvim_set_keymap('n', '<leader>p ', ':Packer ', { noremap = true})
+      vim.api.nvim_set_keymap('n', '<leader>pl', ':PackerLoad ', { noremap = true})
+      vim.api.nvim_set_keymap('n', '<leader>ps', '<cmd>PackerStatus<cr>', { noremap = true})
+      vim.api.nvim_set_keymap('n', '<leader>py', ':PackerSync<cr>', { noremap = true})
+      vim.api.nvim_set_keymap('n', '<leader>pc', ':PackerCompile<cr>', { noremap = true})
+      vim.api.nvim_set_keymap('n', '<leader>pu', ':PackerUpdate<cr>', { noremap = true})
+      vim.api.nvim_set_keymap('n', '<leader>pp', ':PackerProfile<cr>', { noremap = true})
+    end
+    }
     use {'gennaro-tedesco/nvim-jqx', opt = true, filetype = 'json'}
+    use {'andymass/vim-matchup', keys = "%" }
     use {'bronson/vim-visual-star-search', opt = true, keys = {'#', ' #', '*', ' *'} }
     use {
       'kyazdani42/nvim-tree.lua',

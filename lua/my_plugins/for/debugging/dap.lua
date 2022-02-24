@@ -1,4 +1,5 @@
 use {'mfussenegger/nvim-dap',
+  opt = true,
   -- ft = { 'python', 'lua' },
   requires = { "nvim-dap-virtual-text", "rcarriga/nvim-dap-ui" },
   config = function()
