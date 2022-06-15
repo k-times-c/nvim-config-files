@@ -1,1 +1,0 @@
-require('my_plugins/for/snippet-support/luasnip')

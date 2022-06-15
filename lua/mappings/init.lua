@@ -1,6 +1,0 @@
-require('mappings/insert')
-require('mappings/leader')
-require('mappings/ex-cmd-line')
-require('mappings/normal')
-require('mappings/highlight')
-require('mappings/terminal')
