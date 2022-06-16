@@ -14,8 +14,6 @@ vim.o.wrap                     = false
 vim.o.ruler                    = true
 vim.go.path                    = ".,,**3"
 vim.o.encoding                 = "utf8"
---Incremental live completion (note: this is now a default on master)
--- vim.o.inccommand = 'nosplit'
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -77,7 +75,8 @@ return require('packer').startup(function(use)
     vim.keymap.set('n', '<leader>pl', ':PackerLoad ')
     vim.keymap.set('n', '<leader>ps', '<cmd>PackerStatus<cr>')
     vim.keymap.set('n', '<leader>py', ':PackerSync<cr>')
-    vim.keymap.set('n', '<leader>pc', ':PackerCompile<cr>')
+    vim.keymap.set('n', '<leader>pC', ':PackerClean<cr>')
+    vim.keymap.set('n', '<leader>pc', ':PackerCompile profile=true<cr>')
     vim.keymap.set('n', '<leader>pu', ':PackerUpdate<cr>')
     vim.keymap.set('n', '<leader>pp', ':PackerProfile<cr>')
   end
@@ -89,18 +88,24 @@ return require('packer').startup(function(use)
   use { 'tpope/vim-surround' }
   use { 'tpope/vim-abolish', cmd = { "Subvert", "Abolish", "S" } }
   use { "tpope/vim-repeat", keys = '.' }
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',
+  use { 'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
     requires = {
       { 'nvim-treesitter/playground', cmd = "TSPlaygroundToggle" },
       { "nvim-treesitter/nvim-treesitter-textobjects" },
       { 'nvim-treesitter/nvim-treesitter-context', after = "nvim-treesitter", disable = true },
-      { 'nvim-treesitter/nvim-treesitter-refactor' },
+      { 'nvim-treesitter/nvim-treesitter-refactor', keys = "grr" },
+      { 'RRethy/nvim-treesitter-endwise', ft = 'lua' },
+      { 'RRethy/nvim-treesitter-textsubjects', keys = { 'v', "." }, config = function() vim.cmd(":e | normal gv.") end }
     },
     config = function()
       require 'nvim-treesitter.configs'.setup {
         ensure_installed = { "lua", "python", "norg" },
         matchup = { enable = true },
         highlight = { enable = true },
+        endwise = {
+          enable = true,
+        },
         indent = { enable = true },
         refactor = {
           smart_rename = {
@@ -121,10 +126,18 @@ return require('packer').startup(function(use)
             },
           },
         },
+        textsubjects = {
+          enable = true,
+          prev_selection = ',', -- (Optional) keymap to select the previous selection
+          keymaps = {
+            ['.'] = 'textsubjects-smart',
+            [';'] = 'textsubjects-container-outer',
+            ['i;'] = 'textsubjects-container-inner',
+          },
+        },
         textobjects = {
           select = {
             enable = true,
-            -- Automatically jump forward to textobj, similar to targets.vim
             lookahead = true,
             keymaps = {
               -- You can use the capture groups defined in textobjects.scm
@@ -242,7 +255,7 @@ return require('packer').startup(function(use)
       })
     end
   }
-
+  use { 'stevearc/aerial.nvim', config = function() require('aerial').setup() end }
   use { 'mfussenegger/nvim-dap',
     ft = "python",
     requires = {
@@ -294,33 +307,6 @@ return require('packer').startup(function(use)
       if not packer_plugins["telescope-dap.nvim"].loaded then
         require("packer").loader("telescope-dap.nvim")
       end
-
-      -- dap.adapters.python = {
-      --   type = 'executable';
-      --   command = '/Users/kyleclark/.virtualenvs/debugpy/bin/python';
-      --   args = { '-m', 'debugpy.adapter' };
-      -- }
-      --
-      -- dap.configurations.python = {
-      --   {
-      --     type = 'python'; -- the type here established the link to the adapter definition: `dap.adapters.python`
-      --     request = 'launch';
-      --     name = "Launch file";
-      --
-      --     program = "${file}";
-      --     pythonPath = function()
-      --       local cwd = vim.fn.getcwd()
-      --       if vim.fn.executable(cwd .. '/venv/bin/python') == 1 then
-      --         return cwd .. '/venv/bin/python'
-      --       elseif vim.fn.executable(cwd .. '/.venv/bin/python') == 1 then
-      --         return cwd .. '/.venv/bin/python'
-      --       else
-      --         return '/usr/bin/python'
-      --       end
-      --     end;
-      --   },
-      -- }
-
     end,
     after = { "telescope.nvim" },
   }
@@ -372,11 +358,14 @@ return require('packer').startup(function(use)
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
         vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
       end
-
       -- Add additional capabilities supported by nvim-cmp
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
+      require("lspconfig").vimls.setup {
+        on_attach = on_attach, -- require("aerial").on_attach,
+        capabilities = capabilities,
+      }
       require('lspconfig')['pyright'].setup {
         on_attach = on_attach,
         capabilities = capabilities,
@@ -446,6 +435,7 @@ return require('packer').startup(function(use)
   }
   use { 'TimUntersberger/neogit',
     requires = 'nvim-lua/plenary.nvim',
+    cmd = 'Neogit',
     config = function()
       local neogit = require('neogit')
       neogit.setup {}
