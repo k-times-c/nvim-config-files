@@ -68,7 +68,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
 end
 
-
 return require('packer').startup(function(use)
   use { 'wbthomason/packer.nvim', config = function()
     vim.keymap.set('n', '<leader>p ', ':Packer ')
@@ -96,6 +95,7 @@ return require('packer').startup(function(use)
       { 'nvim-treesitter/nvim-treesitter-context', after = "nvim-treesitter", disable = true },
       { 'nvim-treesitter/nvim-treesitter-refactor', keys = "grr" },
       { 'RRethy/nvim-treesitter-endwise', ft = 'lua' },
+      -- TODO: wrap config call to be ran at the correct time?
       { 'RRethy/nvim-treesitter-textsubjects', keys = { 'v', "." }, config = function() vim.cmd(":e | normal gv.") end }
     },
     config = function()
@@ -183,7 +183,47 @@ return require('packer').startup(function(use)
       vim.o.foldexpr = "nvim_treesitter#foldexpr()"
     end,
   }
-  use { 'L3MON4D3/LuaSnip' }
+  use { 'L3MON4D3/LuaSnip',
+    config = function()
+      local ls = require("luasnip")
+			print('packer luasnip loaded')
+      -- ls.config.set_config({}
+
+      -- press <Tab> to expand or jump in a snippet. These can also be mapped separately
+      -- " via <Plug>luasnip-expand-snippet and <Plug>luasnip-jump-next.
+      -- imap <silent><expr> <Tab> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>'
+      -- " -1 for jumping backwards.
+      -- inoremap <silent> <S-Tab> <cmd>lua require'luasnip'.jump(-1)<Cr>
+      --
+      -- snoremap <silent> <Tab> <cmd>lua require('luasnip').jump(1)<Cr>
+      -- snoremap <silent> <S-Tab> <cmd>lua require('luasnip').jump(-1)<Cr>
+      --
+      -- " For changing choices in choiceNodes (not strictly necessary for a basic setup).
+      -- imap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
+      -- smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
+      -- )
+      vim.keymap.set({ "i", "s" }, "<c-k>", function()
+        if ls.expand_or_jumpable() then
+          ls.expand_or_jump()
+        end
+      end, { silent = true })
+
+      vim.keymap.set({ "i", "s" }, "<c-j>", function()
+        if ls.jumpable(-1) then
+          ls.jump(-1)
+        end
+      end, { silent = true })
+
+      vim.keymap.set("i", "<c-l>", function()
+        if ls.choice_active() then
+          ls.change_choice(1)
+        end
+      end, { silent = true })
+
+      vim.keymap.set("n", "<leader><leader>s", "source ~/.config/nvim/after/plugin/luasnip.lua<CR>")
+
+    end
+  }
   use { 'hrsh7th/nvim-cmp',
     requires = {
       'hrsh7th/cmp-nvim-lsp',
@@ -441,6 +481,12 @@ return require('packer').startup(function(use)
       neogit.setup {}
     end
   }
+
+	use {
+		"AndrewRadev/splitjoin.vim",
+		keys = { "gJ", "gS" },
+	}
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if packer_bootstrap then
