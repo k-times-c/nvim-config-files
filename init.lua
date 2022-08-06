@@ -67,6 +67,7 @@ vim.api.nvim_create_autocmd("TextYankPost",
 vim.opt.wildignore = { "**/node_modules/**", "**/dist/**", "*.pyc", "*__pycache__/**", "**/venv/**", ".DS_Store*" }
 
 local fn = vim.fn
+local packer_bootstrap = nil
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
@@ -85,17 +86,7 @@ return require('packer').startup(function(use)
     vim.keymap.set('n', '<leader>pp', ':PackerProfile<cr>')
   end
   }
-  -- Lua
-  use {
-    "folke/which-key.nvim",
-    config = function()
-      require("which-key").setup {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      }
-    end
-  }
+  use { "folke/which-key.nvim", config = function() require("which-key").setup {} end }
   use { 'bronson/vim-visual-star-search', opt = true, keys = { '#', ' #', '*', '<leader>*' } }
   use { 'andymass/vim-matchup', keys = "%" }
   use { 'gennaro-tedesco/nvim-jqx', opt = true, filetype = 'json' }
@@ -370,7 +361,12 @@ return require('packer').startup(function(use)
       telescope.setup {
         extensions = {
           file_browser = {
-            hijack_netrw = true
+            hijack_netrw = true,
+            mappings = {
+              i = {
+                ["<C-/>"] = "which_key",
+              },
+            }
           }
         }
       }
@@ -455,10 +451,10 @@ return require('packer').startup(function(use)
               enable = true,
               -- Put format options here
               -- NOTE: the value should be STRING!!
-              defaultConfig = {
-                indent_style = "space",
-                indent_size = "2",
-              }
+              -- defaultConfig = {
+              --   indent_style = "space",
+              --   indent_size = "2",
+              -- }
             },
           },
         },
@@ -562,6 +558,7 @@ return require('packer').startup(function(use)
       }
     end
   }
+  use { "folke/lua-dev.nvim" }
   use {
     'lewis6991/gitsigns.nvim',
     config = function()
@@ -597,11 +594,15 @@ return require('packer').startup(function(use)
         end
       }
     end
-  } -- Automatically set up your configuration after cloning packer.nvim
+  }
+  use { "k-times-c/refactoring.nvim" }
+  -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if packer_bootstrap then
     require('packer').sync()
   end
+
+
 end)
 
 -- TODO: make an autocmd or make a file to set the lua tab widths
