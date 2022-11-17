@@ -1,6 +1,4 @@
 -- vim.g.loaded_netrwPlugin = true
--- vim.g.do_filetype_lua          = 1 -- will be default in nvim 0.8
--- vim.g.did_load_filetypes       = 0
 vim.g.loaded_tarPlugin = true
 vim.g.loaded_zipPlugin = true
 vim.g.loaded_tutor_mode_plugin = true
@@ -16,6 +14,7 @@ vim.o.wrap = false
 vim.o.ruler = true
 -- vim.go.path                    = ".,,**3"
 vim.o.encoding = "utf8"
+vim.o.spell = true
 vim.keymap.set("n", "<Space>", "<nop>", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-w><C-w>", "<nop>", { noremap = true, silent = true }) -- windows meta key
 vim.g.mapleader = " "
@@ -57,6 +56,17 @@ vim.opt.list = true
 --         callback = function() vim.cmd( [[ set softtab ]]) end,
 --     group = lua_formatting
 --     })
+
+vim.o.ls = 0
+vim.o.ch = 0
+
+vim.keymap.set("n", "j", "gj", { noremap = false, silent = true })
+vim.keymap.set("n", "k", "gk", { noremap = false, silent = true })
+
+vim.keymap.set("t", "<M-h>", "<C-\\><C-n><C-w>h")
+vim.keymap.set("t", "<M-j>", "<C-\\><C-n><C-w>j")
+vim.keymap.set("t", "<M-k>", "<C-\\><C-n><C-w>k")
+vim.keymap.set("t", "<M-l>", "<C-\\><C-n><C-w>l")
 
 local group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 
@@ -120,17 +130,20 @@ return require("packer").startup(function(use)
   use({ "gennaro-tedesco/nvim-jqx", opt = true, filetype = "json" })
   use({
     "kylechui/nvim-surround",
+    tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end,
   })
-  -- config = function()
-  -- require("nvim-surround").setup({})
-  -- end,
-  -- keys = { "ys", "cs", "ds" }, -- TODO: implement this with whichkey enabled
-  -- })
+
   use({
     "tpope/vim-abolish",
     -- cmd = { "Subvert", "Abolish", "S" },
     -- keys = { "cr" },
   })
+
   use({ "tpope/vim-repeat", keys = "." })
   use({
     "nvim-treesitter/nvim-treesitter",
@@ -239,25 +252,7 @@ return require("packer").startup(function(use)
     end,
   })
   use({
-    "L3MON4D3/LuaSnip",
-    config = function()
-      local ls = require("luasnip")
-      vim.keymap.set({ "i", "s" }, "<c-l>", function()
-        if ls.expand_or_jumpable() then
-          ls.expand_or_jump()
-        end
-      end, { silent = true })
-      vim.keymap.set({ "i", "s" }, "<c-k>", function()
-        if ls.jumpable(-1) then
-          ls.jump(-1)
-        end
-      end, { silent = true })
-      vim.keymap.set({ "i", "s" }, "<c-j>", function()
-        if ls.jumpable(1) then
-          ls.jump(1)
-        end
-      end, { silent = true })
-    end,
+    "L3MON4D3/LuaSnip", --[[ see after/plugin section for config  ]]
   })
   use({
     "hrsh7th/nvim-cmp",
@@ -347,27 +342,12 @@ return require("packer").startup(function(use)
   })
   use({
     "mfussenegger/nvim-dap",
-    ft = "python",
     requires = {
-      {
-        "rcarriga/nvim-dap-ui",
-        opt = true,
-        requires = "mfussenegger/nvim-dap",
-      },
-      {
-        "nvim-telescope/telescope-dap.nvim",
-        opt = true,
-        requires = {
-          "mfussenegger/nvim-dap",
-          "nvim-telescope/telescope.nvim",
-        },
-        config = function()
-          require("telescope").load_extension("dap")
-        end,
-      },
+      "rcarriga/nvim-dap-ui",
+      "nvim-telescope/telescope-dap.nvim",
+      "mfussenegger/nvim-dap",
       {
         "theHamsta/nvim-dap-virtual-text",
-        opt = true,
         requires = "mfussenegger/nvim-dap",
         config = function()
           local dap, dapui = require("dap"), require("dapui")
@@ -384,30 +364,46 @@ return require("packer").startup(function(use)
           end
         end,
       },
+      "jbyuki/one-small-step-for-vimkind",
       {
         "mfussenegger/nvim-dap-python",
         config = function()
-          local dappython = require("dap-python")
-          dappython.setup("~/.virtualenvs/debugpy/bin/python")
-          dappython.test_runner = "pytest"
+          local dap_python = require("dap-python")
+          dap_python.setup("~/.virtualenvs/debugpy/bin/python")
+          dap_python.test_runner = "pytest"
         end,
       },
     },
     config = function()
-      if not packer_plugins["nvim-dap-python"].loaded then
-        require("packer").loader("nvim-dap-python")
+      local dap = require("dap")
+      dap.configurations.lua = {
+        {
+          type = "nlua",
+          request = "attach",
+          name = "Attach to running Neovim instance",
+        },
+      }
+
+      dap.adapters.nlua = function(callback, config)
+        callback({
+          type = "server",
+          host = config.host or "127.0.0.1",
+          port = config.port or 8086,
+        })
       end
-      if not packer_plugins["nvim-dap-ui"].loaded then
-        require("packer").loader("nvim-dap-ui")
-      end
-      if not packer_plugins["nvim-dap-virtual-text"].loaded then
-        require("packer").loader("nvim-dap-virtual-text")
-      end
-      if not packer_plugins["telescope-dap.nvim"].loaded then
-        require("packer").loader("telescope-dap.nvim")
-      end
+      -- if not packer_plugins["nvim-dap-python"].loaded then
+      --   require("packer").loader("nvim-dap-python")
+      -- end
+      -- if not packer_plugins["nvim-dap-ui"].loaded then
+      --   require("packer").loader("nvim-dap-ui")
+      -- end
+      -- if not packer_plugins["nvim-dap-virtual-text"].loaded then
+      --   require("packer").loader("nvim-dap-virtual-text")
+      -- end
+      -- if not packer_plugins["telescope-dap.nvim"].loaded then
+      --   require("packer").loader("telescope-dap.nvim")
+      -- end
     end,
-    after = { "telescope.nvim" },
   })
 
   use({
@@ -418,6 +414,7 @@ return require("packer").startup(function(use)
       "nvim-telescope/telescope-file-browser.nvim",
     },
     config = function()
+      local fb_actions = require("telescope").extensions.file_browser.actions
       local telescope = require("telescope")
       telescope.setup({
         extensions = {
@@ -426,12 +423,18 @@ return require("packer").startup(function(use)
             mappings = {
               i = {
                 ["<C-/>"] = "which_key",
+                ["<C-h>"] = fb_actions.goto_home_dir,
+                ["<C-.>"] = fb_actions.toggle_hidden,
+                ["<C-y>"] = fb_actions.goto_parent_dir,
+                ["<C-e>"] = { f = false },
+                ["<C-g>"] = { f = false }
               },
             },
           },
         },
       })
       telescope.load_extension("fzf")
+      require("telescope").load_extension("dap")
       telescope.load_extension("file_browser")
       vim.keymap.set("n", "<leader>ff", "<cmd>Telescope file_browser<cr>")
       vim.keymap.set("n", "<leader>fp", function()
@@ -440,9 +443,14 @@ return require("packer").startup(function(use)
         })
       end)
       vim.keymap.set("n", "<leader>f/", "<cmd>Telescope current_buffer_fuzzy_find<cr>")
-      vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>")
+      vim.keymap.set("n", "<leader>fls", "<cmd>Telescope buffers<cr>")
       vim.keymap.set("n", "<leader>f?", "<cmd>Telescope help_tags<cr>")
       vim.keymap.set("n", "<leader>f`", "<cmd>Telescope marks<cr>")
+      vim.keymap.set("n", "<leader>fp", function()
+        telescope.extensions.file_browser.file_browser({
+          path = vim.fn.stdpath("data") .. "/site/pack/packer/start/",
+        })
+      end)
     end,
   })
   use({ "milisims/nvim-luaref" })
@@ -459,15 +467,15 @@ return require("packer").startup(function(use)
       vim.keymap.set("n", ">d", vim.diagnostic.goto_next, opts)
       vim.keymap.set("n", "_d", vim.diagnostic.setloclist, opts)
 
-      local lsp_formatting = function(bufnr)
-        vim.lsp.buf.format({
-          filter = function(client)
-            -- apply whatever logic you want (in this example, we'll only use null-ls)
-            return client.name == "null-ls"
-          end,
-          bufnr = bufnr,
-        })
-      end
+      -- local lsp_formatting = function(bufnr)
+      --   vim.lsp.buf.format({
+      --     filter = function(client)
+      --       -- apply whatever logic you want (in this example, we'll only use null-ls)
+      --       return client.name == "null-ls"
+      --     end,
+      --     bufnr = bufnr,
+      --   })
+      -- end
 
       -- if you want to set up formatting on save, you can use this as a callback
       local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
@@ -479,13 +487,14 @@ return require("packer").startup(function(use)
             group = augroup,
             buffer = bufnr,
             callback = function()
-              lsp_formatting(bufnr)
+              vim.lsp.buf.format()
             end,
           })
         end
 
         -- Enable completion triggered by <c-x><c-o>
         vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+        -- vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.format")
         local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
         local bufopts = { noremap = true, silent = true, buffer = bufnr }
@@ -509,7 +518,7 @@ return require("packer").startup(function(use)
       end
       -- Add additional capabilities supported by nvim-cmp
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
       local lsp = require("lspconfig")
       lsp.vimls.setup({
@@ -558,6 +567,14 @@ return require("packer").startup(function(use)
       })
     end,
   })
+
+  use({
+    "glacambre/firenvim",
+    run = function()
+      vim.fn["firenvim#install"](0)
+    end,
+  })
+
   use({
     "numToStr/Comment.nvim",
     config = function()
@@ -571,13 +588,13 @@ return require("packer").startup(function(use)
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       {
-        "antoinemadec/FixCursorHold.nvim",--[[ , opt = true  ]]
+        "antoinemadec/FixCursorHold.nvim", --[[ , opt = true  ]]
       },
       {
-        "nvim-neotest/neotest-python",--[[ , ft = "python"  ]]
+        "nvim-neotest/neotest-python", --[[ , ft = "python"  ]]
       },
       {
-        "nvim-neotest/neotest-plenary",--[[ , ft = "lua"  ]]
+        "nvim-neotest/neotest-plenary", --[[ , ft = "lua"  ]]
       },
     },
     config = function()
@@ -711,7 +728,7 @@ return require("packer").startup(function(use)
   })
 
   use({
-    "folke/lua-dev.nvim",--[[ ,
+    "folke/lua-dev.nvim", --[[ ,
     config = function()
       require("lua-dev").setup({
         library = { plugins = { "neotest" }, types = true },
@@ -755,12 +772,8 @@ return require("packer").startup(function(use)
       })
     end,
   })
-  use({ "k-times-c/refactoring.nvim" })
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if packer_bootstrap then
-    require("packer").sync()
-  end
+
+  use({ "ThePrimeagen/refactoring.nvim" }) -- Automatically set up your configuration after cloning packer.nvim; -- Put this at the end after all plugins; if packer_bootstrap then; require("packer").sync() end
 
   use({
     "danymat/neogen",
@@ -771,21 +784,6 @@ return require("packer").startup(function(use)
     requires = "nvim-treesitter/nvim-treesitter",
     -- Uncomment next line if you want to follow only stable versions
     -- tag = "*"
-  })
-
-  use({
-    "jose-elias-alvarez/null-ls.nvim",
-    config = function()
-      local null_ls = require("null-ls")
-      null_ls.setup({
-        sources = {
-          null_ls.builtins.formatting.stylua,
-          -- null_ls.builtins.diagnostics.eslint,
-          null_ls.builtins.completion.spell,
-          null_ls.builtins.code_actions.gitsigns,
-        },
-      })
-    end,
   })
 
   use({ "tweekmonster/helpful.vim", cmd = "HelpfulVersion" })
@@ -800,19 +798,19 @@ return require("packer").startup(function(use)
         },
       })
       require("telescope").load_extension("harpoon")
-      vim.keymap.set("n", "m<C-h>", function()
+      vim.keymap.set("n", "mh", function()
         require("harpoon.mark").add_file()
       end)
-      vim.keymap.set("n", "<leader><C-h>", function()
+      vim.keymap.set("n", "<leader>h", function()
         require("harpoon.ui").toggle_quick_menu()
       end)
-      vim.keymap.set("n", "[<C-h>", function()
+      vim.keymap.set("n", "[h", function()
         require("harpoon.ui").nav_prev()
       end)
-      vim.keymap.set("n", "]<C-h>", function()
+      vim.keymap.set("n", "]h", function()
         require("harpoon.ui").nav_next()
       end)
-      vim.keymap.set("n", "<leader>f<C-h>", "<CMD>Telescope harpoon marks<CR>")
+      vim.keymap.set("n", "<leader>f<C-h>", "<Cmd>Telescope harpoon marks<CR>")
       vim.keymap.set("n", "g<C-h>", function()
         require("harpoon.ui").nav_file(vim.v.count1)
       end)
