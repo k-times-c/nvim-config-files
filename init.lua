@@ -254,6 +254,7 @@ return require("packer").startup(function(use)
   use({
     "L3MON4D3/LuaSnip", --[[ see after/plugin section for config  ]]
   })
+  use({ "wellle/targets.vim" })
   use({
     "hrsh7th/nvim-cmp",
     requires = {
@@ -452,6 +453,7 @@ return require("packer").startup(function(use)
         })
       end)
     end,
+    cond = function() if vim.g.vscode then return false else return true end end
   })
   use({ "milisims/nvim-luaref" })
   use({ "williamboman/nvim-lsp-installer" })
@@ -568,12 +570,26 @@ return require("packer").startup(function(use)
     end,
   })
 
-  use({
-    "glacambre/firenvim",
-    run = function()
-      vim.fn["firenvim#install"](0)
-    end,
-  })
+  -- use({
+  --   "glacambre/firenvim",
+  --   run = function()
+  --     vim.fn["firenvim#install"](0)
+  --   end,
+  --   config = function()
+  --     vim.g.firenvim_config = {
+  --       globalSettings = {
+  --         ['.*'] = {
+  --           alt = 'all',
+  --         },
+  --         localSettings = {
+  --           ['.*'] = {
+  --             takeover = 'never',
+  --           },
+  --         },
+  --       },
+  --     }
+  --   end
+  -- })
 
   use({
     "numToStr/Comment.nvim",
